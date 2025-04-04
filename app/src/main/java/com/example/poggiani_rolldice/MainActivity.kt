@@ -1,5 +1,6 @@
 package com.example.poggiani_rolldice
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -19,11 +20,23 @@ class MainActivity : AppCompatActivity() {
 
         buttonRoll.setOnClickListener(View.OnClickListener{
 
-            var toast = Toast.makeText(this, "LANCIO DEI DADI", Toast.LENGTH_LONG)
+            var toast = Toast.makeText(this, "LANCIO DEL DADO", Toast.LENGTH_LONG)
             //Toast è un messaggio di testo temporaneo. 4 parametri: contesto, testo, posizione, tempo di visualizzazione
             //posizione di defoult in basso (non dichiarata)
 
             toast.show()
+
+            var mioIntent : Intent = Intent(this, SecondActivity:: class.java,)
+            //Intent usato per passar eda un'activity all'altra
+
+            var mioRandom = (1..6).random()
+            //genera numero causale tra 1 e 6
+
+            mioIntent.putExtra("MESSAGGE", "Numero estratto: $mioRandom")
+            //passare alla seconda activity alcune informazioni
+
+            startActivity(mioIntent)
+            //lancio dell'intent
         })
     }
 }
