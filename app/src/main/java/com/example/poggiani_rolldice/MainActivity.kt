@@ -36,6 +36,10 @@ class MainActivity : AppCompatActivity() {
             //passare alla seconda activity alcune informazioni
 
             startActivity(mioIntent)
+
+            mioIntent.putExtra("RANDOM", mioRandom)
+
+            startActivity(mioIntent)
             //lancio dell'intent
         })
     }
