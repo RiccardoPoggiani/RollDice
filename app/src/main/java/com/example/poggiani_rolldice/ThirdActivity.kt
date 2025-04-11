@@ -19,9 +19,9 @@ class ThirdActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.textViewActivityThird)
 
         if (num > 3){
-
+            textView.text = "Il numero è maggiore di 3... Hai vinto!";
         } else{
-
+            textView.text = "Il numero è minore di 3... Hai perso!";
         }
     }
 }
