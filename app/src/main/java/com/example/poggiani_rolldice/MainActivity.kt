@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             toast.show()
 
             var mioIntent : Intent = Intent(this, SecondActivity:: class.java,)
-            //Intent usato per passar eda un'activity all'altra
+            //Intent usato per passare da un'activity all'altra
 
             var mioRandom = (1..6).random()
             //genera numero causale tra 1 e 6

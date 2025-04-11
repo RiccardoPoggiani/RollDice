@@ -1,9 +1,13 @@
 package com.example.poggiani_rolldice
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -40,5 +44,15 @@ class SecondActivity : AppCompatActivity() {
 
         imageViewSecond.setImageResource(resource)
         Log.d("SECOND", "FINITO DISEGNO DADO")
+
+        var buttonVer : Button = findViewById(R.id.buttonVerify)
+
+        buttonVer.setOnClickListener(View.OnClickListener{
+            var toast_s = Toast.makeText(this, "VERIFICA ESITO ESTRAZIONE", Toast.LENGTH_LONG)
+            toast_s.show()
+            var Intent_s : Intent = Intent(this, ThirdActivity:: class.java,)
+            Intent_s.putExtra("R", random)
+            startActivity(Intent_s)
+        })
     }
 }
