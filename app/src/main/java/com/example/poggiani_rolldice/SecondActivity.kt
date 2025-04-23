@@ -10,29 +10,30 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class SecondActivity : AppCompatActivity() {
+
+    private val TAG = "SecondActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_second)
 
-        var msg = intent.getStringExtra("MESSAGGE")
-        //Ricavo il messaggio nell'Intent e lo inserisco nella variabile
+        Log.d(TAG, "SecondActivity avviata")
+
+        val random = intent.getIntExtra("R", -1)
+        val numeroInserito = intent.getIntExtra("I", -1)
+
+        Log.d(TAG, "Numero estratto dal dado (random): $random")
+        Log.d(TAG, "Numero inserito dall'utente: $numeroInserito")
 
         val textView = findViewById<TextView>(R.id.TextViewActivitySecond)
-        //ricavo l'elemento textView dove inserire il risultato
+        textView.text = "Numero estratto: $random"
 
-        textView.text = msg;
-        //Inserisco il messaggio memorizzato con l'intent nella textView
+        val imageViewSecond = findViewById<ImageView>(R.id.imageViewActivitySecond)
 
-        var imageViewSecond = findViewById<ImageView>(R.id.imageViewActivitySecond)
-
-        val random = intent.getIntExtra("RANDOM", -1)
-
-        var resource = when (random){
+        val resource = when (random) {
             1 -> R.drawable.dice_face_1
             2 -> R.drawable.dice_face_2
             3 -> R.drawable.dice_face_3
@@ -42,17 +43,23 @@ class SecondActivity : AppCompatActivity() {
             else -> R.drawable.dices
         }
 
+        Log.d(TAG, "Risorsa immagine associata al numero: $resource")
         imageViewSecond.setImageResource(resource)
-        Log.d("SECOND", "FINITO DISEGNO DADO")
+        Log.d(TAG, "FINITO DISEGNO DADO")
 
-        var buttonVer : Button = findViewById(R.id.buttonVerify)
+        val buttonVer = findViewById<Button>(R.id.buttonVerify)
 
-        buttonVer.setOnClickListener(View.OnClickListener{
-            var toast_s = Toast.makeText(this, "VERIFICA ESITO ESTRAZIONE", Toast.LENGTH_LONG)
-            toast_s.show()
-            var Intent_s : Intent = Intent(this, ThirdActivity:: class.java,)
-            Intent_s.putExtra("R", random)
-            startActivity(Intent_s)
-        })
+        buttonVer.setOnClickListener {
+            Log.d(TAG, "Bottone verifica premuto")
+            Toast.makeText(this, "VERIFICA ESITO ESTRAZIONE", Toast.LENGTH_LONG).show()
+
+            val intentS = Intent(this, ThirdActivity::class.java).apply {
+                putExtra("R", random)
+                putExtra("I", numeroInserito)
+            }
+
+            Log.d(TAG, "Intent per ThirdActivity creato con R: $random, I: $numeroInserito")
+            startActivity(intentS)
+        }
     }
 }

@@ -2,45 +2,53 @@ package com.example.poggiani_rolldice
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = "MainActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        var buttonRoll : Button = findViewById(R.id.buttonRoll)
+        Log.d(TAG, "MainActivity avviata")
 
-        buttonRoll.setOnClickListener(View.OnClickListener{
+        val buttonRoll: Button = findViewById(R.id.buttonRoll)
 
-            var toast = Toast.makeText(this, "LANCIO DEL DADO", Toast.LENGTH_LONG)
-            //Toast è un messaggio di testo temporaneo. 4 parametri: contesto, testo, posizione, tempo di visualizzazione
-            //posizione di defoult in basso (non dichiarata)
+        buttonRoll.setOnClickListener {
+            Log.d(TAG, "Bottone premuto")
+            Toast.makeText(this, "LANCIO DEL DADO", Toast.LENGTH_LONG).show()
 
-            toast.show()
+            val mioRandom = (1..6).random()
+            Log.d(TAG, "Numero casuale generato: $mioRandom")
 
-            var mioIntent : Intent = Intent(this, SecondActivity:: class.java,)
-            //Intent usato per passare da un'activity all'altra
+            val editText = findViewById<EditText>(R.id.editTextNumber)
+            val numeroInserito = editText.text.toString().toIntOrNull()
 
-            var mioRandom = (1..6).random()
-            //genera numero causale tra 1 e 6
+            if (numeroInserito == null) {
+                Log.d(TAG, "Numero inserito non valido")
+                Toast.makeText(this, "Inserisci un numero valido!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-            mioIntent.putExtra("MESSAGGE", "Numero estratto: $mioRandom")
-            //passare alla seconda activity alcune informazioni
+            Log.d(TAG, "Numero inserito: $numeroInserito")
+
+            val mioIntent = Intent(this, SecondActivity::class.java).apply {
+                putExtra("R", mioRandom)
+                putExtra("I", numeroInserito)
+            }
+
+            Log.d(TAG, "Intent creato con extra - R: $mioRandom, I: $numeroInserito")
 
             startActivity(mioIntent)
-
-            mioIntent.putExtra("RANDOM", mioRandom)
-
-            startActivity(mioIntent)
-            //lancio dell'intent
-        })
+        }
     }
 }

@@ -1,27 +1,36 @@
 package com.example.poggiani_rolldice
 
 import android.os.Bundle
-import android.widget.ImageView
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class ThirdActivity : AppCompatActivity() {
+
+    private val TAG = "ThirdActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_third)
 
-        var num = getIntent().getIntExtra("R",-1);
+        Log.d(TAG, "ThirdActivity avviata")
+
+        val numeroEstratto = intent.getIntExtra("R", -1)
+        val numeroInserito = intent.getIntExtra("I", -1)
+
+        Log.d(TAG, "Numero estratto ricevuto: $numeroEstratto")
+        Log.d(TAG, "Numero inserito dall'utente ricevuto: $numeroInserito")
 
         val textView = findViewById<TextView>(R.id.textViewActivityThird)
 
-        if (num > 3){
-            textView.text = "Il numero è maggiore di 3... Hai vinto!";
-        } else{
-            textView.text = "Il numero è minore di 3... Hai perso!";
+        if (numeroEstratto == numeroInserito) {
+            textView.text = "Complimenti! \nHai indovinato... \nEra proprio $numeroEstratto"
+            Log.d(TAG, "Esito: indovinato")
+        } else {
+            textView.text = "Peccato! \nNon hai indovinato... \nHai scelto $numeroInserito \nma il numero era $numeroEstratto"
+            Log.d(TAG, "Esito: non indovinato")
         }
     }
 }
